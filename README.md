@@ -12,7 +12,7 @@ Features:
 
 How to use:
 
-- This requires [Go][go] to be installed;
+- This requires [Go][go], [esbuild][esbuild] to be installed;
 - [Install Task][installtask];
 - Run `task install` to install the tools required to build this app;
 - Run `task` to build and run the web app;
@@ -24,3 +24,4 @@ How to use:
 [installtask]: https://taskfile.dev/installation/
 [doc]: https://taskfile.dev/
 [doc-zh]: https://task-zh.readthedocs.io/
+[esbuild]: https://esbuild.github.io/

@@ -1,0 +1,66 @@
+# https://taskfile.dev/
+
+version: '3'
+
+interval: 1s
+
+vars:
+  JS_BUNDLE: public/bundle.js
+  CSS_BUNDLE: public/bundle.css
+
+  EXE: app{{exeExt}}
+
+  CMD_RM: rm{{exeExt}}
+  CMD_CP: cp{{exeExt}}
+
+tasks:
+  default:
+    desc: Build and run the web app
+    aliases: [run]
+    cmds:
+      - task: build
+      - ./{{.EXE}}
+  
+  install:
+    desc: Install dependencies
+    cmds:
+      - go build -v -o bin/{{.CMD_RM}} ./cmd/rm
+      - go build -v -o bin/{{.CMD_CP}} ./cmd/cp
+
+  build:
+    desc: Build the web app
+    deps: [js, css]
+    cmds:
+      - go build -v -o {{.EXE}} ./app.go
+    sources:
+      - '**/*.go'
+      - '{{.JS_BUNDLE}}'
+      - '{{.CSS_BUNDLE}}'
+      - templates/**/*
+    generates:
+      - '{{.EXE}}'
+
+  js:
+    desc: Bundle JS using esbuild
+    cmds:
+      - esbuild --bundle --minify assets/js/index.js > {{.JS_BUNDLE}}
+    sources:
+      - assets/js/**/*.js
+    generates:
+      - '{{.JS_BUNDLE}}'
+
+  css:
+    desc: Bundle CSS using esbuild
+    cmds:
+      - esbuild --bundle --minify assets/css/index.css > {{.CSS_BUNDLE}}
+    sources:
+      - assets/css/**/*.css
+    generates:
+      - '{{.CSS_BUNDLE}}'
+
+  clean:
+    desc: Clean every generated file
+    cmds:
+      - bin/{{.CMD_RM}} {{.CSS_BUNDLE}}
+      - bin/{{.CMD_RM}} {{.JS_BUNDLE}}
+      - bin/{{.CMD_RM}} {{.EXE}}

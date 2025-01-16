@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"go-task-example/internal"
 	"net/http"
 )
 
@@ -17,6 +18,8 @@ func main() {
 	http.HandleFunc("/", indexPage)
 
 	fmt.Printf("Running web app on :8383")
+	internal.OpenUrl("http://localhost:8383")
+
 	if err := http.ListenAndServe(":8383", nil); err != nil {
 		panic(err)
 	}

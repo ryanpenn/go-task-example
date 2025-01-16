@@ -1,5 +1,6 @@
 /.task/checksum
 /app
+/app.exe
 /public/bundle.css
 /public/bundle.js
 /bin

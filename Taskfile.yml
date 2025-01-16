@@ -12,6 +12,7 @@ vars:
 
   CMD_RM: rm{{exeExt}}
   CMD_CP: cp{{exeExt}}
+  CMD_OPEN: open{{exeExt}}
 
 tasks:
   default:
@@ -20,12 +21,14 @@ tasks:
     cmds:
       - task: build
       - ./{{.EXE}}
+      - bin/{{.CMD_OPEN}} http://localhost:8383
   
   install:
     desc: Install dependencies
     cmds:
       - go build -v -o bin/{{.CMD_RM}} ./cmd/rm
       - go build -v -o bin/{{.CMD_CP}} ./cmd/cp
+      - go build -v -o bin/{{.CMD_OPEN}} ./cmd/open
 
   build:
     desc: Build the web app

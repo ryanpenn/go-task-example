@@ -20,8 +20,7 @@ tasks:
     aliases: [run]
     cmds:
       - task: build
-      - ./{{.EXE}}
-      - bin/{{.CMD_OPEN}} http://localhost:8383
+      - ./bin/{{.EXE}}
   
   install:
     desc: Install dependencies
@@ -34,7 +33,7 @@ tasks:
     desc: Build the web app
     deps: [js, css]
     cmds:
-      - go build -v -o {{.EXE}} ./app.go
+      - go build -v -o bin/{{.EXE}} ./app.go
     sources:
       - '**/*.go'
       - '{{.JS_BUNDLE}}'

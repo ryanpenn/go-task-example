@@ -8,11 +8,11 @@ vars:
   JS_BUNDLE: public/bundle.js
   CSS_BUNDLE: public/bundle.css
 
-  EXE: app{{exeExt}}
+  EXE: bin/app{{exeExt}}
 
-  CMD_RM: rm{{exeExt}}
-  CMD_CP: cp{{exeExt}}
-  CMD_OPEN: open{{exeExt}}
+  CMD_RM: bin/rm{{exeExt}}
+  CMD_CP: bin/cp{{exeExt}}
+  CMD_OPEN: bin/open{{exeExt}}
 
 tasks:
   default:
@@ -20,20 +20,20 @@ tasks:
     aliases: [run]
     cmds:
       - task: build
-      - ./bin/{{.EXE}}
+      - ./{{.EXE}}
   
   install:
     desc: Install dependencies
     cmds:
-      - go build -v -o bin/{{.CMD_RM}} ./cmd/rm
-      - go build -v -o bin/{{.CMD_CP}} ./cmd/cp
-      - go build -v -o bin/{{.CMD_OPEN}} ./cmd/open
+      - go build -v -o {{.CMD_RM}} ./cmd/rm
+      - go build -v -o {{.CMD_CP}} ./cmd/cp
+      - go build -v -o {{.CMD_OPEN}} ./cmd/open
 
   build:
     desc: Build the web app
     deps: [js, css]
     cmds:
-      - go build -v -o bin/{{.EXE}} ./app.go
+      - go build -v -o {{.EXE}} ./app.go
     sources:
       - '**/*.go'
       - '{{.JS_BUNDLE}}'
@@ -63,6 +63,6 @@ tasks:
   clean:
     desc: Clean every generated file
     cmds:
-      - bin/{{.CMD_RM}} {{.CSS_BUNDLE}}
-      - bin/{{.CMD_RM}} {{.JS_BUNDLE}}
-      - bin/{{.CMD_RM}} {{.EXE}}
+      - ./{{.CMD_RM}} {{.CSS_BUNDLE}}
+      - ./{{.CMD_RM}} {{.JS_BUNDLE}}
+      - ./{{.CMD_RM}} {{.EXE}}

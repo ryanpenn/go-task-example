@@ -25,3 +25,4 @@ How to use:
 [doc]: https://taskfile.dev/
 [doc-zh]: https://task-zh.readthedocs.io/
 [esbuild]: https://esbuild.github.io/
+[setup-task]: https://github.com/arduino/setup-task

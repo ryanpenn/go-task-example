@@ -34,12 +34,12 @@ jobs:
           path: ./version.txt
       - name: Zip
         run: |
-          cd bin
-          zip -r app_v${{ steps.version.outputs.content }}.zip ./app
+          cd release
+          zip -r app_v${{ steps.version.outputs.content }}.zip ./*
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: bin/app_v${{ steps.version.outputs.content }}.zip
+          files: release/app_v${{ steps.version.outputs.content }}.zip
           token: '${{ secrets.GITHUB_TOKEN }}'
           draft: false
           prerelease: false

@@ -8,7 +8,7 @@ vars:
   JS_BUNDLE: public/bundle.js
   CSS_BUNDLE: public/bundle.css
 
-  EXE: bin/app{{exeExt}}
+  EXE: release/app{{exeExt}}
 
   CMD_RM: bin/rm{{exeExt}}
   CMD_CP: bin/cp{{exeExt}}
@@ -28,6 +28,15 @@ tasks:
       - go build -v -o {{.CMD_RM}} ./cmd/rm
       - go build -v -o {{.CMD_CP}} ./cmd/cp
       - go build -v -o {{.CMD_OPEN}} ./cmd/open
+
+  release:
+    desc: Build and release the web app for different platforms
+    deps: [js, css]
+    cmds:
+      - GOARCH=amd64 GOOS=linux go build -o release/app-linux-amd64 ./app.go
+      - GOARCH=amd64 GOOS=windows go build -o release/app-windows-amd64.exe ./app.go
+      - GOARCH=amd64 GOOS=darwin go build -o release/app-macos-amd64 ./app.go
+      - GOARCH=arm64 GOOS=darwin go build -o release/app-macos-arm64 ./app.go
 
   build:
     desc: Build the web app
@@ -66,3 +75,4 @@ tasks:
       - ./{{.CMD_RM}} {{.CSS_BUNDLE}}
       - ./{{.CMD_RM}} {{.JS_BUNDLE}}
       - ./{{.CMD_RM}} {{.EXE}}
+      - ./{{.CMD_RM}} release

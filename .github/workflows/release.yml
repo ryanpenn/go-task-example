@@ -39,7 +39,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: app_v${{ steps.version.outputs.content }}.zip
+          files: bin/app_v${{ steps.version.outputs.content }}.zip
           token: '${{ secrets.GITHUB_TOKEN }}'
           draft: false
           prerelease: false
